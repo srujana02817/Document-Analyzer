@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analysis Results</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            color: #4a90e2;
+            font-size: 36px;
+            margin-top: 50px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section h2 {
+            font-size: 24px;
+            color: #4a90e2;
+            margin-bottom: 15px;
+        }
+
+        .result-box {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .result-box ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .result-box li {
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .result-box li strong {
+            color: #333;
+            font-weight: 600;
+        }
+
+        .error {
+            color: red;
+            font-size: 18px;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .note {
+            font-size: 14px;
+            color: #888;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 28px;
+            }
+
+            .container {
+                padding: 15px;
+            }
+
+            .result-box {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Analysis Results</h1>
+
+    <div class="container">
+        {% if action == 'summary' %}
+            <div class="section">
+                <h2>Summary:</h2>
+                <div class="result-box">
+                    <p>{{ result }}</p>
+                </div>
+            </div>
+
+        {% elif action == 'sentiment_analysis' %}
+            <div class="section">
+                <h2>Sentiment Analysis:</h2>
+                <div class="result-box">
+                    <ul>
+                        {% for sentiment in result %}
+                            <li><strong>Label:</strong> {{ sentiment.label }}, <strong>Score:</strong> {{ sentiment.score }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+
+        {% elif action == 'topic_modeling' %}
+            <div class="section">
+                <h2>Topics:</h2>
+                <div class="result-box">
+                    <ul>
+                        {% for topic, details in result.items() %}
+                            <li>
+                                <strong>{{ topic }}:</strong>
+                                <p><strong>Keywords:</strong> {{ details.keywords | join(', ') }}</p>
+                                <p><strong>Description:</strong> {{ details.description }}</p>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+
+        {% elif action == 'entity_recognition' %}
+            <div class="section">
+                <h2>Named Entity Recognition (NER):</h2>
+                <div class="result-box">
+                    <ul>
+                        {% for label, entities in result.items() %}
+                            <li>
+                                <strong>{{ label }}</strong>
+                                <ul>
+                                    {% for entity in entities %}
+                                        <li>{{ entity.text }} <small>(Context: {{ entity.context }})</small></li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+
+        {% elif action == 'resume_info' %}
+            <div class="section">
+                <h2>Resume Information:</h2>
+                <div class="result-box">
+                    <ul>
+                        <li><strong>Name:</strong> {{ result.name }}</li>
+                        <li><strong>Email:</strong> {{ result.email }}</li>
+                        <li><strong>Phone:</strong> {{ result.phone }}</li>
+                    </ul>
+                </div>
+            </div>
+
+        {% else %}
+            <div class="section error">
+                <p>Error: No valid action was selected or results could not be processed.</p>
+            </div>
+        {% endif %}
+    </div>
+
+    <p class="note">If you need more details or a new analysis, please try again.</p>
+</body>
+</html>

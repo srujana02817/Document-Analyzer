@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choose Action</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .actions {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .actions a {
+            display: block;
+            text-decoration: none;
+            padding: 10px 20px;
+            background-color: #4a90e2;
+            color: white;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        .actions a:hover {
+            background-color: #357ab8;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #666;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+
+        .back-link:hover {
+            background-color: #444;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Choose an Action</h1>
+        <div class="actions">
+            <a href="/analyze/summary">Summarize Text</a>
+            <a href="/analyze/sentiment_analysis">Perform Sentiment Analysis</a>
+            <a href="/analyze/entity_recognition">Detect Entities</a>
+            <a href="/analyze/topic_modeling">Discover Topics</a>
+        </div>
+        <a href="/" class="back-link">Upload Another File</a>
+    </div>
+    <a href="#" class="action-link" onclick="document.getElementById('topic-form').style.display='block'">Discover Topics</a>
+<div id="topic-form" style="display: none;">
+    <form action="/analyze/topic_modeling" method="GET">
+        <label for="num_topics">Enter number of topics:</label>
+        <input type="number" id="num_topics" name="num_topics" min="1" max="10" required>
+        <button type="submit">Run Topic Modeling</button>
+    </form>
+</div>
+
+</body>
+</html>
+
+
+
+
+
